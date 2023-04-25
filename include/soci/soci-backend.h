@@ -27,7 +27,7 @@ enum data_type
 };
 
 // the enum type for indicator variables
-enum indicator { i_ok, i_null, i_truncated };
+enum indicator { i_ok, i_null, i_truncated, i_not_found };
 
 class session;
 class failover_callback;

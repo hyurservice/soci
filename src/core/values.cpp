@@ -25,6 +25,9 @@ indicator values::get_indicator(std::size_t pos) const
     }
     else
     {
+        if (pos >= indicators_.size()) {
+            return i_not_found;
+        }
         return *indicators_[pos];
     }
 }
@@ -40,9 +43,7 @@ indicator values::get_indicator(std::string const& name) const
         std::map<std::string, std::size_t>::const_iterator it = index_.find(name);
         if (it == index_.end())
         {
-            std::ostringstream msg;
-            msg << "Column '" << name << "' not found";
-            throw soci_error(msg.str());
+            return i_not_found;
         }
         return *indicators_[it->second];
     }

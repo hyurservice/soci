@@ -12,6 +12,7 @@
 #include <cctype>
 #include <sstream>
 #include <string>
+#include <limits>
 
 using namespace soci;
 using namespace details;
@@ -79,6 +80,9 @@ void row::clean_up()
 
 indicator row::get_indicator(std::size_t pos) const
 {
+    if (pos >= indicators_.size()) {
+        return i_not_found;
+    }
     return *indicators_.at(pos);
 }
 
@@ -102,9 +106,7 @@ std::size_t row::find_column(std::string const &name) const
     std::map<std::string, std::size_t>::const_iterator it = index_.find(name);
     if (it == index_.end())
     {
-        std::ostringstream msg;
-        msg << "Column '" << name << "' not found";
-        throw soci_error(msg.str());
+        return std::numeric_limits<size_t>::max();
     }
 
     return it->second;
